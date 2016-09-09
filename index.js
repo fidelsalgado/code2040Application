@@ -65,4 +65,21 @@ function step4() {
   });
 }
 
-step4();
+function step5() {
+  var url = code2040Url + 'dating';
+  request(postOptions(url, {}), function (error, response, body) {
+    if (error) throw new Error(error);
+
+    var intervalInMs = body.interval * 1000;
+    var newDate = new Date((new Date(body.datestamp)).getTime() + intervalInMs);
+    var url = code2040Url + 'dating/validate';
+    var data = {datestamp: newDate.toISOString().split(".")[0] + "Z"};
+    request(postOptions(url, data), function (error, response, body) {
+      if (error) throw new Error(error);
+      console.log(body);
+    });
+  });
+
+}
+
+step5();
